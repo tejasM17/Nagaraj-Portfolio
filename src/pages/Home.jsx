@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaLinkedinIn, FaGithub } from 'react-icons/fa';
 
@@ -27,7 +26,7 @@ const Home = () => {
                className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gradient-to-r from-teal-500 via-purple-600 to-orange-500 text-gray-900 p-4 md:p-6"
           >
                {/* Mobile Layout */}
-               <div className="w-full mt-8 md:hidden flex flex-col items-center justify-center">
+               <div className="w-full mt-3 md:hidden flex flex-col items-center justify-center">
                     {/* Image */}
                     <div className="relative w-48 h-48 mb-6">
                          <img
@@ -43,7 +42,11 @@ const Home = () => {
                          <h1 className="text-3xl font-bold mb-4 leading-tight">
                               <span className="text-gray-800">Hi,</span>
                               <br />
-                              <span className="text-teal-600">I'am Nagaraju</span>
+                              <span className="bg-gradient-to-r from-green-300 via-sky-500 to-white bg-clip-text text-transparent font-extrabold tracking-wide">
+                                   I'am Nagaraju
+                              </span>
+
+
                          </h1>
                          <div className="mb-6 text-lg font-medium text-gray-700 h-10 overflow-hidden">
                               <AnimatePresence mode="wait">
@@ -106,7 +109,10 @@ const Home = () => {
                          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
                               <span className="text-gray-800">Hi,</span>
                               <br />
-                              <span className="text-teal-600">I'am Nagaraju</span>
+                              <span className="bg-gradient-to-r from-green-300 via-sky-500 to-white bg-clip-text text-transparent font-extrabold tracking-wide">
+                                   I'am Nagaraju
+                              </span>
+
                          </h1>
                          <div className="mb-8 text-xl md:text-2xl font-medium text-gray-700 h-10 md:h-12 overflow-hidden">
                               <AnimatePresence mode="wait">
@@ -139,7 +145,7 @@ const Home = () => {
                          </button>
                          <div className="flex items-center justify-start space-x-6">
                               <a
-                                   href="https://www.linkedin.com"
+                                   href="https://www.linkedin.com/in/nagaraju-chittimalla/"
                                    target="_blank"
                                    rel="noopener noreferrer"
                                    className="text-teal-700 hover:text-teal-900 transition-all duration-300 transform hover:scale-125 hover:rotate-12"
@@ -147,7 +153,7 @@ const Home = () => {
                                    <FaLinkedinIn size={24} />
                               </a>
                               <a
-                                   href="https://github.com"
+                                   href="https://github.com/Nagaraju3737"
                                    target="_blank"
                                    rel="noopener noreferrer"
                                    className="text-gray-800 hover:text-gray-600 transition-all duration-300 transform hover:scale-125 hover:rotate-12"
