@@ -12,8 +12,7 @@ const Header = () => {
      const navLinks = [
           { to: 'home', label: 'Home' },
           { to: 'about', label: 'About' },
-          { to: 'skills', label: 'Skills' },
-          { to: 'work', label: 'Work' },
+          { to: 'projects', label: 'Projects' },
           { to: 'contact', label: 'Contact' },
      ];
 
@@ -27,6 +26,7 @@ const Header = () => {
                               smooth={true}
                               duration={500}
                               className="cursor-pointer hover:text-yellow-300 transition-colors duration-300"
+                              onClick={() => setIsOpen(false)} // Ensure mobile menu closes if open
                          >
                               Nagaraju
                          </Link>
@@ -42,6 +42,7 @@ const Header = () => {
                                         duration={500}
                                         className="text-white text-base md:text-lg font-inter hover:text-yellow-300 transition-colors duration-300 cursor-pointer relative group"
                                         activeClass="text-yellow-300 border-b-2 border-yellow-300"
+                                        onClick={() => setIsOpen(false)} // Ensure consistency, though not strictly needed for desktop
                                    >
                                         {link.label}
                                         <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-yellow-300 group-hover:w-full transition-all duration-300"></span>
