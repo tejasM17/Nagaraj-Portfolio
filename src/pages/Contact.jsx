@@ -1,24 +1,26 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaDiscord, FaLinkedin, FaTwitter, FaInstagram, FaFacebook, FaWhatsapp, FaGithubAlt, FaTwitch, FaMailBulk } from 'react-icons/fa';
 import { FaCode, FaGithub, FaM, FaSquareXTwitter, FaX } from 'react-icons/fa6';
+import Notification from './ui/notification';
 
 const Contact = () => {
     const form = useRef();
+    const [showNotification, setShowNotification] = useState(false);
 
     const sendEmail = (e) => {
         e.preventDefault();
 
         // Replace with your actual EmailJS service ID, template ID, and user ID
-        const serviceId = 'YOUR_SERVICE_ID';
-        const templateId = 'YOUR_TEMPLATE_ID';
-        const userId = 'YOUR_USER_ID';
+        const serviceId = 'service_6xpr9cm';
+        const templateId = 'template_sm78zor';
+        const userId = 'E0Kr2x2V-xETtisdz';
 
         emailjs.sendForm(serviceId, templateId, form.current, userId)
             .then((result) => {
                 console.log(result.text);
-                alert('Message sent successfully!');
+                setShowNotification(true);
                 e.target.reset();
             }, (error) => {
                 console.log(error.text);
@@ -165,11 +167,16 @@ const Contact = () => {
                     }}>
                         Send Me a Message
                     </h3>
+                    <Notification
+                        message="Email sent successfully!"
+                        show={showNotification}
+                        onClose={() => setShowNotification(false)}
+                    />
 
                     <div className="input-row" style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
                         <input
-                            type="text"
-                            name="user_name"
+                            type="name"
+                            name="name"
                             placeholder="Name"
                             required
                             className="input-field"
@@ -186,7 +193,7 @@ const Contact = () => {
                         />
                         <input
                             type="email"
-                            name="user_email"
+                            name="email"
                             placeholder="Email"
                             required
                             className="input-field"
