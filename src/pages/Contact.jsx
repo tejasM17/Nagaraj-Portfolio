@@ -18,11 +18,9 @@ const Contact = () => {
         emailjs.sendForm(serviceId, templateId, form.current, userId)
             .then((result) => {
                 console.log(result.text);
-                alert('Message sent successfully!');
                 e.target.reset();
             }, (error) => {
                 console.log(error.text);
-                alert('Failed to send message. Please try again.');
             });
     };
 
