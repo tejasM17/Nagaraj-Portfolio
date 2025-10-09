@@ -1,26 +1,45 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaDiscord, FaLinkedin, FaTwitter, FaInstagram, FaFacebook, FaWhatsapp, FaGithubAlt, FaTwitch, FaMailBulk } from 'react-icons/fa';
 import { FaCode, FaGithub, FaM, FaSquareXTwitter, FaX } from 'react-icons/fa6';
+import Notification from './ui/Notification';
 
 const Contact = () => {
     const form = useRef();
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('success');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const sendEmail = (e) => {
         e.preventDefault();
 
-        // Replace with your actual EmailJS service ID, template ID, and user ID
-        const serviceId = 'YOUR_SERVICE_ID';
-        const templateId = 'YOUR_TEMPLATE_ID';
-        const userId = 'YOUR_USER_ID';
+        // Use Vite's import.meta.env for environment variables
+        const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+        const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+        const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-        emailjs.sendForm(serviceId, templateId, form.current, userId)
+        // Validate environment variables
+        if (!serviceId || !templateId || !publicKey) {
+            setNotificationMessage('Configuration error. Please try again later. 😔');
+            setNotificationType('error');
+            setShowNotification(true);
+            return;
+        }
+
+        emailjs.sendForm(serviceId, templateId, form.current, publicKey)
             .then((result) => {
                 console.log(result.text);
+                setNotificationMessage('Message sent successfully! 🚀');
+                setNotificationType('success');
                 e.target.reset();
             }, (error) => {
                 console.log(error.text);
+                setNotificationMessage('Message failed to send. Please try again.');
+                setNotificationType('error');
+            })
+            .finally(() => {
+                setShowNotification(true);
             });
     };
 
@@ -56,7 +75,7 @@ const Contact = () => {
         <section id="contact" style={{
             background: '#000',
             color: '#FFF',
-            padding: '100px 20px', // Increased padding for better spacing
+            padding: '100px 20px',
             minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
@@ -74,7 +93,7 @@ const Contact = () => {
             }
             .contact-container {
               flex-direction: column !important;
-              gap: 40px; // Increased gap for mobile
+              gap: 40px;
             }
             .form-section, .info-section {
               width: 100% !important;
@@ -92,7 +111,7 @@ const Contact = () => {
           @media (min-width: 769px) {
             .contact-container {
               flex-direction: row;
-              gap: 50px; // Increased gap for desktop
+              gap: 50px;
             }
             .input-row {
               flex-direction: row;
@@ -113,7 +132,6 @@ const Contact = () => {
                 <h2 className="text-5xl font-extrabold tracking-wide bg-gradient-to-r from-cyan-400 via-pink-500 to-yellow-300 bg-clip-text text-transparent animate-glow">
                     Contact With Me
                 </h2>
-
             </div>
 
             <motion.p
@@ -123,7 +141,7 @@ const Contact = () => {
                 style={{
                     fontSize: '1rem',
                     color: '#CCC',
-                    marginBottom: '40px', // Increased margin for spacing
+                    marginBottom: '40px',
                     textAlign: 'center',
                     maxWidth: '600px',
                 }}
@@ -132,8 +150,8 @@ const Contact = () => {
 
             <div className="contact-container" style={{
                 display: 'flex',
-                gap: '50px', // Increased gap for better separation
-                maxWidth: '1100px', // Increased max-width for better layout
+                gap: '50px',
+                maxWidth: '1100px',
                 width: '100%',
                 justifyContent: 'center',
             }}>
@@ -149,15 +167,15 @@ const Contact = () => {
                         background: 'rgba(255, 255, 255, 0.05)',
                         backdropFilter: 'blur(10px)',
                         borderRadius: '15px',
-                        padding: '40px', // Increased padding for spacing
-                        width: '450px', // Increased width for better layout
+                        padding: '40px',
+                        width: '450px',
                         border: '1px solid rgba(0, 255, 255, 0.2)',
                         boxShadow: '0 0 20px rgba(0, 0, 0, 0.5)',
                     }}
                 >
                     <h3 style={{
                         fontSize: '1.5rem',
-                        marginBottom: '25px', // Increased margin for spacing
+                        marginBottom: '25px',
                         color: '#00FFFF',
                         textAlign: 'center',
                     }}>
@@ -176,10 +194,10 @@ const Contact = () => {
                                 background: 'rgba(255, 255, 255, 0.05)',
                                 border: '1px solid rgba(0, 255, 255, 0.3)',
                                 borderRadius: '8px',
-                                padding: '15px', // Increased padding for better spacing
+                                padding: '15px',
                                 color: '#FFF',
                                 fontSize: '1rem',
-                                width: '100%', // Ensure full width within flex
+                                width: '100%',
                             }}
                         />
                         <input
@@ -193,10 +211,10 @@ const Contact = () => {
                                 background: 'rgba(255, 255, 255, 0.05)',
                                 border: '1px solid rgba(0, 255, 255, 0.3)',
                                 borderRadius: '8px',
-                                padding: '15px', // Increased padding for better spacing
+                                padding: '15px',
                                 color: '#FFF',
                                 fontSize: '1rem',
-                                width: '100%', // Ensure full width within flex
+                                width: '100%',
                             }}
                         />
                     </div>
@@ -208,14 +226,14 @@ const Contact = () => {
                         className="textarea-field"
                         style={{
                             width: '100%',
-                            height: '150px', // Increased height for better spacing
+                            height: '150px',
                             background: 'rgba(255, 255, 255, 0.05)',
                             border: '1px solid rgba(0, 255, 255, 0.3)',
                             borderRadius: '8px',
-                            padding: '15px', // Increased padding for better spacing
+                            padding: '15px',
                             color: '#FFF',
                             fontSize: '1rem',
-                            marginBottom: '25px', // Increased margin for spacing
+                            marginBottom: '25px',
                             resize: 'vertical',
                         }}
                     />
@@ -240,7 +258,7 @@ const Contact = () => {
                             justifyContent: 'center',
                             gap: '8px',
                             boxShadow: '0 0 10px rgba(0, 255, 255, 0.3)',
-                            marginTop: '10px', // Added margin for spacing
+                            marginTop: '10px',
                         }}
                     >
                         <span><FaMailBulk /></span>
@@ -258,15 +276,15 @@ const Contact = () => {
                         background: 'rgba(255, 255, 255, 0.05)',
                         backdropFilter: 'blur(10px)',
                         borderRadius: '15px',
-                        padding: '40px', // Increased padding for spacing
-                        width: '450px', // Increased width for better layout
+                        padding: '40px',
+                        width: '450px',
                         border: '1px solid rgba(0, 255, 255, 0.2)',
                         boxShadow: '0 0 20px rgba(0, 0, 0, 0.5)',
                     }}
                 >
                     <h3 style={{
                         fontSize: '1.5rem',
-                        marginBottom: '25px', // Increased margin for spacing
+                        marginBottom: '25px',
                         color: '#00FFFF',
                         textAlign: 'center',
                     }}>
@@ -297,7 +315,7 @@ const Contact = () => {
                     <div>
                         <h4 style={{
                             fontSize: '1.2rem',
-                            marginBottom: '20px', // Increased margin for spacing
+                            marginBottom: '20px',
                             color: '#00FFFF',
                             textAlign: 'center',
                         }}>
@@ -305,7 +323,7 @@ const Contact = () => {
                         </h4>
                         <div className="social-icons" style={{
                             display: 'flex',
-                            gap: '20px', // Increased gap for better spacing
+                            gap: '20px',
                             justifyContent: 'center',
                         }}>
                             <motion.a
@@ -432,6 +450,13 @@ const Contact = () => {
                     </div>
                 </motion.div>
             </div>
+
+            <Notification
+                message={notificationMessage}
+                type={notificationType}
+                isVisible={showNotification}
+                onClose={() => setShowNotification(false)}
+            />
         </section>
     );
 };
